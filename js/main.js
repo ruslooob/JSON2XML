@@ -29,7 +29,9 @@ function getTextFromLeftTextArea() {
 }
 
 function minifyJSON() {
-	leftTextArea.value = leftTextArea.value.replace(/\s{2,}/g, ' ');
+	let json = JSON.parse(leftTextArea.value);
+	let jsonObject = JSON.stringify(json, null, 0);
+	leftTextArea.value = jsonObject;
 }
 
 function clearTextAreas() {
