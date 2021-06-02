@@ -9,8 +9,8 @@ let rightTextArea = textAreas[1];
 let convertButton = docGet('.convert-button');
 let browseButton = docGet('.browse-button');
 let loadUriButton = docGet('load-uri-button');
-let beautifyJsonButton = docGet('.beautyfi-json-button');
-let beautifyXMLButton = docGet('.beautyfi-xml-button');
+let beautifyJsonButton = docGet('.beautify-json-button');
+let beautifyXMLButton = docGet('.beautify-xml-button');
 let minifyJsonButton = docGet('.minify-json-button');
 let minifyXmlButton = docGet('.minify-xml-button');
 
@@ -32,8 +32,26 @@ function minifyJSON() {
 	let json = JSON.parse(leftTextArea.value);
 	let jsonObject = JSON.stringify(json, null, 0);
 	leftTextArea.value = jsonObject;
+	console.log('minifyJSON');
+
 }
 
+function minifyXML() {
+	let xmlParser = new DOMParser();
+	let xmlDoc = xmlParser.parseFromString(rightTextArea.value, 'text/xml');
+	rightTextArea.value = xmlDoc.stringify(xmlDoc, null, 0);
+}
+
+/* По умолчанию использует 4 пробела 
+	 во вложенных элемантах 					*/
+function beautifyJSON() {
+	let json = JSON.parse(leftTextArea.value);
+	leftTextArea.value = JSON.stringify(json, null, 4);
+}
+
+function beautifyXML() {
+	console.log('beautifyXML');
+}
 function clearTextAreas() {
 	leftTextArea.value = '';
 	rightTextArea.value = '';
@@ -53,3 +71,5 @@ function docGetAll(selector) {
 convertButton.addEventListener('click', getTextFromLeftTextArea);
 clearButton.addEventListener('click', clearTextAreas);
 minifyJsonButton.addEventListener('click', minifyJSON);
+minifyXmlButton.addEventListener('click', minifyXML);
+beautifyJsonButton.addEventListener('click', beautifyJSON);
