@@ -28,12 +28,23 @@ function getTextFromLeftTextArea() {
 	leftTextAreaText = leftTextArea.value;
 }
 
+
+
+function json2xml() {
+	let convert = require('xml-js');
+	console.log(convert);
+	let json = JSON.parse(leftTextArea.value);
+	let options = { compact: true, ignoreComment: true, spaces: 4 };
+	let result = convert.json2xml(json, options);
+	rightTextArea.value = result;
+}
+
+
 function minifyJSON() {
 	let json = JSON.parse(leftTextArea.value);
 	let jsonObject = JSON.stringify(json, null, 0);
 	leftTextArea.value = jsonObject;
 	console.log('minifyJSON');
-
 }
 
 function minifyXML() {
@@ -68,7 +79,7 @@ function docGetAll(selector) {
 
 /// listeners
 
-convertButton.addEventListener('click', getTextFromLeftTextArea);
+convertButton.addEventListener('click', json2xml);
 clearButton.addEventListener('click', clearTextAreas);
 minifyJsonButton.addEventListener('click', minifyJSON);
 minifyXmlButton.addEventListener('click', minifyXML);

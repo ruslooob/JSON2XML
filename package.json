@@ -1,0 +1,15 @@
+{
+	"scripts": {
+		"build": "webpack --config webpack.config.js"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.14.3",
+		"@babel/preset-env": "^7.14.4",
+		"babel-loader": "^8.2.2",
+		"webpack": "^4.29.6",
+		"webpack-cli": "^3.2.3"
+	},
+	"dependencies": {
+		"xml-js": "^1.6.11"
+	}
+}
