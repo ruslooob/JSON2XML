@@ -89,10 +89,18 @@ function clearTextAreas() {
 function swapHeaderTitles() {
 	let header = docGetAll('.header span');
 	let firstTitle = header[0];
-	let secondTitle = header[1];
+	let secondTitle = header[2];
+	// swap
 	let tmp = firstTitle.textContent;
 	firstTitle.textContent = secondTitle.textContent;
 	secondTitle.textContent = tmp;
+
+	let mainSections = docGet('.main__sections');
+	if (mainSections.style.flexDirection === 'row-reverse') {
+		mainSections.style.flexDirection = 'row';
+	} else {
+		mainSections.style.flexDirection = 'row-reverse';
+	}
 }
 
 function docGet(selector) {
