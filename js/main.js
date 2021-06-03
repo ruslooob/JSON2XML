@@ -11,7 +11,7 @@ let json2xmlButton = docGet('.json2xml-button');
 let xml2jsonButton = docGet('.xml2json-button');
 let convertButton = docGet('.convert-button');
 let browseButton = docGet('.browse-button');
-let loadUriButton = docGet('load-uri-button');
+let loadUriButton = docGet('.load-uri-button');
 let beautifyJsonButton = docGet('.beautify-json-button');
 let beautifyXmlButton = docGet('.beautify-xml-button');
 let minifyJsonButton = docGet('.minify-json-button');
@@ -146,4 +146,4 @@ beautifyJsonButton.addEventListener('click', beautifyJSON);
 minifyJsonButton.addEventListener('click', minifyJSON);
 minifyXmlButton.addEventListener('click', minifyXML);
 browseButton.addEventListener('click', browse);
-loadUriButton.addEventListener('click', loadURI)
+loadUriButton.addEventListener('click', loadURI);
