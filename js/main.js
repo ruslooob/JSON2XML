@@ -2,8 +2,8 @@
 
 // textAreas
 let textAreas = docGetAll('.section__textarea');
-let leftTextArea = textAreas[0];
-let rightTextArea = textAreas[1];
+let jsonTextArea = textAreas[0];
+let xmlTextArea = textAreas[1];
 
 // buttons
 let modeChangeButton = docGet('.mode-change-button');
@@ -13,14 +13,12 @@ let convertButton = docGet('.convert-button');
 let browseButton = docGet('.browse-button');
 let loadUriButton = docGet('load-uri-button');
 let beautifyJsonButton = docGet('.beautify-json-button');
-let beautifyXMLButton = docGet('.beautify-xml-button');
+let beautifyXmlButton = docGet('.beautify-xml-button');
 let minifyJsonButton = docGet('.minify-json-button');
 let minifyXmlButton = docGet('.minify-xml-button');
 
 let clearButton = docGet('.clear-button');
 // other vars 
-let leftTextAreaText;
-let rightTextAreaText;
 let mode = 'json2xml';
 
 
@@ -31,8 +29,8 @@ let mode = 'json2xml';
 function json2xml() {
 	try {
 		let convert = require('xml-js');
-		let json = leftTextArea.value;
-		rightTextArea.value = convert.json2xml(json, { compact: true, ignoreComment: true, spaces: 4 });
+		let json = jsonTextArea.value;
+		xmlTextArea.value = convert.json2xml(json, { compact: true, ignoreComment: true, spaces: 4 });
 	} catch (e) {
 		console.log(e);
 	}
@@ -42,8 +40,8 @@ function xml2json() {
 	try {
 		let convert = require('xml-js');
 		let iconvlite = require('iconv-lite');
-		let xml = iconvlite.decode(rightTextArea.value, 'UTF-8');
-		leftTextArea.value = convert.xml2json(xml, { compact: false, spaces: 4 });
+		let xml = iconvlite.decode(xmlTextArea.value, 'UTF-8');
+		jsonTextArea.value = convert.xml2json(xml, { compact: false, spaces: 4 });
 	} catch (e) {
 		console.log(e);
 	}
@@ -59,31 +57,31 @@ function convert() {
 
 
 function minifyJSON() {
-	let json = JSON.parse(leftTextArea.value);
+	let json = JSON.parse(jsonTextArea.value);
 	let jsonObject = JSON.stringify(json, null, 0);
-	leftTextArea.value = jsonObject;
+	jsonTextArea.value = jsonObject;
 	console.log('minifyJSON');
 }
 
+let vkBeatify = require('vkbeautify');
+
 function minifyXML() {
-	let xmlParser = new DOMParser();
-	let xmlDoc = xmlParser.parseFromString(rightTextArea.value, 'text/xml');
-	rightTextArea.value = xmlDoc.stringify(xmlDoc, null, 0);
+	xmlTextArea.value = vkBeatify.xmlmin(xmlTextArea.value, true);
 }
 
 /* По умолчанию использует 4 пробела 
 	 во вложенных элемантах 					*/
 function beautifyJSON() {
-	let json = JSON.parse(leftTextArea.value);
-	leftTextArea.value = JSON.stringify(json, null, 4);
+	let json = JSON.parse(jsonTextArea.value);
+	jsonTextArea.value = JSON.stringify(json, null, 4);
 }
 
 function beautifyXML() {
-	console.log('beautifyXML');
+	xmlTextArea.value = vkBeatify.xml(xmlTextArea.value);
 }
 function clearTextAreas() {
-	leftTextArea.value = '';
-	rightTextArea.value = '';
+	jsonTextArea.value = '';
+	xmlTextArea.value = '';
 }
 
 function swapHeaderTitles() {
@@ -131,6 +129,7 @@ xml2jsonButton.addEventListener('click', () => {
 });
 convertButton.addEventListener('click', convert);
 clearButton.addEventListener('click', clearTextAreas);
+beautifyXmlButton.addEventListener('click', beautifyXML);
+beautifyJsonButton.addEventListener('click', beautifyJSON);
 minifyJsonButton.addEventListener('click', minifyJSON);
 minifyXmlButton.addEventListener('click', minifyXML);
-beautifyJsonButton.addEventListener('click', beautifyJSON);
