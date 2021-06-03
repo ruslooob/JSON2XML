@@ -6,6 +6,7 @@ let leftTextArea = textAreas[0];
 let rightTextArea = textAreas[1];
 
 // buttons
+let modeChangeButton = docGet('.mode-change-button');
 let json2xmlButton = docGet('.json2xml-button');
 let xml2jsonButton = docGet('.xml2json-button');
 let convertButton = docGet('.convert-button');
@@ -87,14 +88,11 @@ function clearTextAreas() {
 
 function swapHeaderTitles() {
 	let header = docGetAll('.header span');
-	console.log(header);
 	let firstTitle = header[0];
 	let secondTitle = header[1];
 	let tmp = firstTitle.textContent;
 	firstTitle.textContent = secondTitle.textContent;
 	secondTitle.textContent = tmp;
-	console.log(firstTitle.textContent);
-	console.log(secondTitle.textContent);
 }
 
 function docGet(selector) {
@@ -109,12 +107,19 @@ function docGetAll(selector) {
 /// listeners
 
 json2xmlButton.addEventListener('click', () => {
-	mode = 'json2xml';
-	swapHeaderTitles();
+	if (mode === 'xml2json') {
+		mode = 'json2xml';
+		swapHeaderTitles();
+		modeChangeButton.textContent = json2xmlButton.textContent;
+	}
+
 });
 xml2jsonButton.addEventListener('click', () => {
-	mode = 'xml2json';
-	swapHeaderTitles();
+	if (mode === 'json2xml') {
+		mode = 'xml2json';
+		swapHeaderTitles();
+		modeChangeButton.textContent = xml2jsonButton.textContent;
+	}
 });
 convertButton.addEventListener('click', convert);
 clearButton.addEventListener('click', clearTextAreas);
