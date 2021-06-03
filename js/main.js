@@ -19,7 +19,7 @@ let minifyXmlButton = docGet('.minify-xml-button');
 let clearButton = docGet('.clear-button');
 // other vars 
 let leftTextAreaText;
-let RightTextAreaText;
+let rightTextAreaText;
 let mode = 'json2xml';
 
 
@@ -30,10 +30,8 @@ let mode = 'json2xml';
 function json2xml() {
 	try {
 		let convert = require('xml-js');
-		let json = JSON.parse(leftTextArea.value);
-		let options = { compact: true, ignoreComment: true, spaces: 4 };
-		let result = convert.json2xml(json, options);
-		rightTextArea.value = result;
+		let json = leftTextArea.value;
+		rightTextArea.value = convert.json2xml(json, { compact: true, ignoreComment: true, spaces: 4 });
 	} catch (e) {
 		console.log(e);
 	}
@@ -42,10 +40,8 @@ function json2xml() {
 function xml2json() {
 	try {
 		let convert = require('xml-js');
-		let xmlParser = new DOMParser();
-		let xml = xmlParser.parseFromString(rightTextArea.value, 'text/xml');
-		// xml = xml.documentElement;
-		console.log(xml);
+		let iconvlite = require('iconv-lite');
+		let xml = iconvlite.decode(rightTextArea.value, "UTF-8");
 		leftTextArea.value = convert.xml2json(xml, { compact: false, spaces: 4 });
 	} catch (e) {
 		console.log(e);
