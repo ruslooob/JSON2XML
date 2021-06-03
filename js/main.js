@@ -6,6 +6,8 @@ let leftTextArea = textAreas[0];
 let rightTextArea = textAreas[1];
 
 // buttons
+let json2xmlButton = docGet('.json2xml-button');
+let xml2jsonButton = docGet('.xml2json-button');
 let convertButton = docGet('.convert-button');
 let browseButton = docGet('.browse-button');
 let loadUriButton = docGet('load-uri-button');
@@ -18,25 +20,44 @@ let clearButton = docGet('.clear-button');
 // other vars 
 let leftTextAreaText;
 let RightTextAreaText;
-
+let mode = 'json2xml';
 
 
 
 /// functions
 
-function getTextFromLeftTextArea() {
-	leftTextAreaText = leftTextArea.value;
-}
-
-
 
 function json2xml() {
-	let convert = require('xml-js');
-	console.log(convert);
-	let json = JSON.parse(leftTextArea.value);
-	let options = { compact: true, ignoreComment: true, spaces: 4 };
-	let result = convert.json2xml(json, options);
-	rightTextArea.value = result;
+	try {
+		let convert = require('xml-js');
+		let json = JSON.parse(leftTextArea.value);
+		let options = { compact: true, ignoreComment: true, spaces: 4 };
+		let result = convert.json2xml(json, options);
+		rightTextArea.value = result;
+	} catch (e) {
+		console.log(e);
+	}
+}
+
+function xml2json() {
+	try {
+		let convert = require('xml-js');
+		let xmlParser = new DOMParser();
+		let xml = xmlParser.parseFromString(rightTextArea.value, 'text/xml');
+		// xml = xml.documentElement;
+		console.log(xml);
+		leftTextArea.value = convert.xml2json(xml, { compact: false, spaces: 4 });
+	} catch (e) {
+		console.log(e);
+	}
+}
+
+function convert() {
+	if (mode === 'json2xml') {
+		json2xml();
+	} else {
+		xml2json();
+	}
 }
 
 
@@ -79,7 +100,9 @@ function docGetAll(selector) {
 
 /// listeners
 
-convertButton.addEventListener('click', json2xml);
+json2xmlButton.addEventListener('click', () => mode = 'json2xml');
+xml2jsonButton.addEventListener('click', () => mode = 'xml2json');
+convertButton.addEventListener('click', convert);
 clearButton.addEventListener('click', clearTextAreas);
 minifyJsonButton.addEventListener('click', minifyJSON);
 minifyXmlButton.addEventListener('click', minifyXML);
