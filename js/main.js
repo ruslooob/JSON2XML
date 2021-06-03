@@ -32,6 +32,7 @@ function json2xml() {
 		let json = jsonTextArea.value;
 		xmlTextArea.value = convert.json2xml(json, { compact: true, ignoreComment: true, spaces: 4 });
 	} catch (e) {
+		alert('Ошибка, некорректный JSON');
 		console.log(e);
 	}
 }
@@ -43,6 +44,7 @@ function xml2json() {
 		let xml = iconvlite.decode(xmlTextArea.value, 'UTF-8');
 		jsonTextArea.value = convert.xml2json(xml, { compact: false, spaces: 4 });
 	} catch (e) {
+		alert('Ошибка, некорректный XML!');
 		console.log(e);
 	}
 }
@@ -101,6 +103,15 @@ function swapHeaderTitles() {
 	}
 }
 
+
+function browse() {
+	alert('Этот функционал еще не готов!');
+}
+
+function loadURI() {
+	alert('Этот функционал еще не готов!');
+}
+
 function docGet(selector) {
 	return document.querySelector(selector);
 }
@@ -127,9 +138,12 @@ xml2jsonButton.addEventListener('click', () => {
 		modeChangeButton.textContent = xml2jsonButton.textContent;
 	}
 });
+
 convertButton.addEventListener('click', convert);
 clearButton.addEventListener('click', clearTextAreas);
 beautifyXmlButton.addEventListener('click', beautifyXML);
 beautifyJsonButton.addEventListener('click', beautifyJSON);
 minifyJsonButton.addEventListener('click', minifyJSON);
 minifyXmlButton.addEventListener('click', minifyXML);
+browseButton.addEventListener('click', browse);
+loadUriButton.addEventListener('click', loadURI)
