@@ -41,7 +41,7 @@ function xml2json() {
 	try {
 		let convert = require('xml-js');
 		let iconvlite = require('iconv-lite');
-		let xml = iconvlite.decode(rightTextArea.value, "UTF-8");
+		let xml = iconvlite.decode(rightTextArea.value, 'UTF-8');
 		leftTextArea.value = convert.xml2json(xml, { compact: false, spaces: 4 });
 	} catch (e) {
 		console.log(e);
@@ -85,6 +85,18 @@ function clearTextAreas() {
 	rightTextArea.value = '';
 }
 
+function swapHeaderTitles() {
+	let header = docGetAll('.header span');
+	console.log(header);
+	let firstTitle = header[0];
+	let secondTitle = header[1];
+	let tmp = firstTitle.textContent;
+	firstTitle.textContent = secondTitle.textContent;
+	secondTitle.textContent = tmp;
+	console.log(firstTitle.textContent);
+	console.log(secondTitle.textContent);
+}
+
 function docGet(selector) {
 	return document.querySelector(selector);
 }
@@ -96,8 +108,14 @@ function docGetAll(selector) {
 
 /// listeners
 
-json2xmlButton.addEventListener('click', () => mode = 'json2xml');
-xml2jsonButton.addEventListener('click', () => mode = 'xml2json');
+json2xmlButton.addEventListener('click', () => {
+	mode = 'json2xml';
+	swapHeaderTitles();
+});
+xml2jsonButton.addEventListener('click', () => {
+	mode = 'xml2json';
+	swapHeaderTitles();
+});
 convertButton.addEventListener('click', convert);
 clearButton.addEventListener('click', clearTextAreas);
 minifyJsonButton.addEventListener('click', minifyJSON);
