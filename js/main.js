@@ -104,12 +104,29 @@ function swapHeaderTitles() {
 }
 
 
-function browse() {
-	alert('Этот функционал еще не готов!');
+function browse(input) {
+	let file = input.files[0];
+
+	let reader = new FileReader();
+
+	reader.readAsText(file);
+
+	reader.onload = function () {
+		alert(reader.result);
+	};
+
+	reader.onerror = function () {
+		alert(reader.error);
+	};
 }
 
 function loadURI() {
-	alert('Этот функционал еще не готов!');
+	let uri = prompt('Введите название сайта');
+	jsonTextArea.value = fetch(uri)
+		.then(response => response.json())
+		.then(data => {
+			jsonTextArea.value = JSON.stringify(data);
+		});
 }
 
 function docGet(selector) {
@@ -145,5 +162,5 @@ beautifyXmlButton.addEventListener('click', beautifyXML);
 beautifyJsonButton.addEventListener('click', beautifyJSON);
 minifyJsonButton.addEventListener('click', minifyJSON);
 minifyXmlButton.addEventListener('click', minifyXML);
-browseButton.addEventListener('click', browse);
+// browseButton.addEventListener('click', browse);
 loadUriButton.addEventListener('click', loadURI);
